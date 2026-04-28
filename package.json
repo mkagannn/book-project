@@ -1,0 +1,15 @@
+{
+  "name": "book-api",
+  "version": "1.0.0",
+  "description": "Simple book API",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
