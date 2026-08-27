@@ -25,7 +25,6 @@ Each book record includes:
 
 - `title` — the title of the book
 - `author` — reference to the book's author
-- `previouslyRead` — whether the book has been read/borrowed before
 - `borrowedBy` — the ID of the member currently holding the book
   - `null` when the book is not currently borrowed
   - Set to the member's user ID once the book is checked out
@@ -39,13 +38,29 @@ Each author record includes:
 - `birthYear` — the author's year of birth
 - `books` — a list of the books written by this author (one-to-many relationship with Book)
 
+### Loan (Borrowing Record)
+
+Borrow history and the full lifecycle of a rental are tracked in a separate relational entity connecting **Users** and **Books**, rather than being stored directly on the Book itself:
+
+- `userId` — reference to the member who requested/holds the loan
+- `bookId` — reference to the borrowed book
+- `status` — one of:
+  - `Requested` — the member has requested the book
+  - `Approved` — the admin has approved the request
+  - `Retrieved` — the member has physically picked up the book
+- `createdAt` — timestamp of when the loan request was created
+- `requestedStartDate` — the intended start date of the rental period
+- `endDate` — the intended end date of the rental period
+
+This separation allows a request to be created ahead of time, independent of when the rental period actually begins — for example, a request made today for a 10-day rental period starting September 1st and ending September 10th.
+
 ## Planned Features
 
 - [ ] Member registration and authentication
 - [ ] Admin/librarian role with approval permissions
-- [ ] Secure borrowing workflow: request → admin approval → loan recorded
+- [ ] Secure borrowing workflow: request → admin approval → retrieval, tracked via the Loan entity's `status` field
 - [ ] Return workflow to reset a book's borrowed status
-- [ ] Book borrow-history tracking (`previouslyRead`)
+- [ ] Loan/borrow-history tracking via the User–Book relational table
 - [ ] Full CRUD for Books and Authors (existing, being carried forward)
 
 ## Status
