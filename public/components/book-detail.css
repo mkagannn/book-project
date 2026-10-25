@@ -1,0 +1,294 @@
+/* =========================
+   BOOK-DETAIL.CSS
+   Kitap detay sayfası stilleri
+========================= */
+
+
+/* =========================
+   BACK LİNKİ
+========================= */
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 28px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #475569;
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.back-link:hover {
+    color: #14b8a6;
+}
+
+.back-link svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2;
+}
+
+
+/* =========================
+   İKİ SÜTUNLU LAYOUT
+========================= */
+
+.detail-layout {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+}
+
+/* Sol: kitap kapağı */
+.detail-cover-wrap {
+    flex-shrink: 0;
+    width: 260px;
+}
+
+.detail-cover {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 14px;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+}
+
+.detail-cover-title {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.detail-cover-author {
+    color: rgba(255,255,255,0.75);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* Sağ: bilgiler + takvim */
+.detail-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.detail-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 6px;
+    line-height: 1.2;
+}
+
+.detail-subtitle {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 24px;
+}
+
+/* Status + Author satırları */
+.detail-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.detail-meta-row {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+}
+
+.detail-meta-label {
+    width: 80px;
+    flex-shrink: 0;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.detail-meta-value {
+    color: #0f172a;
+    font-weight: 500;
+}
+
+.detail-meta-value.available {
+    color: #16a34a;
+}
+
+.detail-meta-value.borrowed {
+    color: #dc2626;
+}
+
+
+/* =========================
+   AVAILABLE DATES CALENDAR
+========================= */
+
+.calendar-card {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 21px 24px;
+    margin-bottom: 0;
+    max-width: 450px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+
+.calendar-card.active {
+    border-color: #14b8a6;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12);
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.calendar-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #475569;
+}
+
+.calendar-nav button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 6px;
+    font-size: 16px;
+    color: #64748b;
+    border-radius: 4px;
+    transition: background 0.15s;
+    line-height: 1;
+}
+
+.calendar-nav button:hover {
+    background: #f1f5f9;
+}
+
+/* Haftanın günleri */
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 4px;
+}
+
+.calendar-weekdays span {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    padding: 4px 0;
+}
+
+/* Günler grid */
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.cal-day {
+    width: 100%;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #334155;
+    transition: background 0.12s;
+    border: none;
+    font-family: inherit;
+}
+
+.cal-day:hover:not(.occupied):not(.past):not(.empty) {
+    background: #f0fdfa;
+    color: #14b8a6;
+}
+
+/* Seçili gün */
+.cal-day.selected {
+    background: #14b8a6;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* Seçim aralığı */
+.cal-day.in-range {
+    background: #ccfbf1;
+    color: #0f766e;
+}
+
+/* Meşgul (loan var) */
+.cal-day.occupied {
+    color: #ef4444;
+    font-weight: 600;
+    cursor: default;
+}
+
+/* Geçmiş günler */
+.cal-day.past {
+    color: #cbd5e1;
+    cursor: default;
+}
+
+/* Boş hücre */
+.cal-day.empty {
+    cursor: default;
+}
+
+
+/* =========================
+   LOAN OLUŞTUR BUTONU
+========================= */
+
+.btn-create-loan {
+    width: 100%;
+    padding: 14px;
+    background: #1e293b;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.btn-create-loan:hover {
+    background: #0f172a;
+}
+
+.btn-create-loan:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+/* Seçim bilgisi */
+.selection-info {
+    font-size: 12px;
+    color: #64748b;
+    text-align: left;
+    margin-top: 8px;
+    margin-bottom: 14px;
+    min-height: 18px;
+    padding-left: 2px;
+}
+

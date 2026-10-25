@@ -28,6 +28,15 @@ const createAuthor = async (req, res) => {
   try {
     const { name, birthYear } = req.body;
 
+    // Check if author already exists (case-insensitive)
+    const existingAuthor = await Author.findOne({ 
+      name: new RegExp('^' + name.trim() + '$', 'i') 
+    });
+    
+    if (existingAuthor) {
+      return res.status(400).json({ message: 'This author already exists.' });
+    }
+
     const newAuthor = await Author.create({ name, birthYear });
 
     res.status(201).json(newAuthor);

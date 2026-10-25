@@ -1,11 +1,30 @@
 const Book = require('../models/book');
 const Author = require('../models/author');
+const Loan = require('../models/loanStructure');
 
 // GET /books
 const getAllBooks = async (req, res) => {
   try {
-    const books = await Book.find().populate('author');
-    res.status(200).json(books);
+    const books = await Book.find().populate('author').lean();
+    
+    // Find active loans for today (including overdue ones)
+    const today = new Date();
+    const activeLoans = await Loan.find({
+      status: 'Approved',
+      requestedStartDate: { $lte: today }
+    }).select('bookId userId');
+
+    const activeLoanMap = {};
+    activeLoans.forEach(loan => {
+      activeLoanMap[loan.bookId.toString()] = loan.userId;
+    });
+
+    const enrichedBooks = books.map(book => ({
+      ...book,
+      borrowedBy: activeLoanMap[book._id.toString()] || null
+    }));
+
+    res.status(200).json(enrichedBooks);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -14,11 +33,61 @@ const getAllBooks = async (req, res) => {
 // GET /books/:id
 const getBookById = async (req, res) => {
   try {
-    const book = await Book.findById(req.params.id).populate('author');
+    const book = await Book.findById(req.params.id).populate('author').lean();
     if (!book) {
       return res.status(404).json({ message: 'Book not found' });
     }
+
+    const today = new Date();
+    const activeLoan = await Loan.findOne({
+      bookId: book._id,
+      status: 'Approved',
+      requestedStartDate: { $lte: today }
+    }).select('userId');
+
+    book.borrowedBy = activeLoan ? activeLoan.userId : null;
+
     res.status(200).json(book);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// GET /books/:id/availability
+const getBookAvailability = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+
+    const today = new Date();
+
+    const occupiedLoans = await Loan.find({
+      bookId: req.params.id,
+      status: 'Approved'
+    })
+      .select('requestedStartDate endDate status -_id')
+      .sort({ requestedStartDate: 1 });
+
+    const availability = occupiedLoans.map((loan) => ({
+      requestedStartDate: loan.requestedStartDate,
+      endDate: loan.endDate,
+      status: loan.status,
+      overdue: loan.endDate < today
+    }));
+
+    // If there is ANY approved loan that started today or in the past, the physical book is still out.
+    const isBorrowedToday = occupiedLoans.some(loan => 
+      new Date(loan.requestedStartDate) <= today
+    );
+
+    res.status(200).json({
+      bookId: book._id,
+      title: book.title,
+      currentlyBorrowed: isBorrowedToday,
+      occupiedDateRanges: availability
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -82,6 +151,7 @@ const deleteBook = async (req, res) => {
 module.exports = {
   getAllBooks,
   getBookById,
+  getBookAvailability,
   createBook,
   updateBook,
   deleteBook

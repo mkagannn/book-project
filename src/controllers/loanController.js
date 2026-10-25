@@ -21,7 +21,7 @@ const createLoan = async (req, res) => {
 
     const overlappingLoan = await Loan.findOne({
       bookId,
-      status: { $in: ['Approved', 'Retrieved'] },
+      status: 'Approved',
       requestedStartDate: { $lte: newEnd },
       endDate: { $gte: newStart }
     });
@@ -48,9 +48,15 @@ const createLoan = async (req, res) => {
 // GET /loans
 const getAllLoans = async (req, res) => {
   try {
-    const loans = await Loan.find()
-      .sort({ createdAt: 1 })
-      .populate('bookId')
+    // Admin sees all, member sees only their own
+    const filter = req.user.role === 'admin' ? {} : { userId: req.user.id };
+
+    const loans = await Loan.find(filter)
+      .sort({ createdAt: -1 })
+      .populate({
+        path: 'bookId',
+        populate: { path: 'author' }
+      })
       .populate('userId');
     res.status(200).json(loans);
   } catch (err) {
@@ -61,7 +67,12 @@ const getAllLoans = async (req, res) => {
 // GET /loans/:id
 const getLoanById = async (req, res) => {
   try {
-    const loan = await Loan.findById(req.params.id).populate('bookId').populate('userId');
+    const loan = await Loan.findById(req.params.id)
+      .populate({
+        path: 'bookId',
+        populate: { path: 'author' }
+      })
+      .populate('userId');
     if (!loan) {
       return res.status(404).json({ message: 'Loan not found' });
     }
@@ -86,7 +97,7 @@ const approveLoan = async (req, res) => {
     const overlappingApprovedLoan = await Loan.findOne({
       _id: { $ne: loan._id },
       bookId: loan.bookId,
-      status: { $in: ['Approved', 'Retrieved'] },
+      status: 'Approved',
       requestedStartDate: { $lte: loan.endDate },
       endDate: { $gte: loan.requestedStartDate }
     });
@@ -106,35 +117,6 @@ const approveLoan = async (req, res) => {
   }
 };
 
-// PUT /loans/:id/retrieve
-const retrieveLoan = async (req, res) => {
-  try {
-    const loan = await Loan.findById(req.params.id);
-    if (!loan) {
-      return res.status(404).json({ message: 'Loan not found' });
-    }
-
-    if (loan.status !== 'Approved') {
-      return res.status(400).json({ message: `Cannot retrieve a loan with status "${loan.status}"` });
-    }
-
-    const book = await Book.findById(loan.bookId);
-    if (!book) {
-      return res.status(404).json({ message: 'Book not found' });
-    }
-
-    book.borrowedBy = loan.userId;
-    await book.save();
-
-    loan.status = 'Retrieved';
-    await loan.save();
-
-    res.status(200).json(loan);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-};
-
 // PUT /loans/:id/return
 const returnLoan = async (req, res) => {
   try {
@@ -143,17 +125,9 @@ const returnLoan = async (req, res) => {
       return res.status(404).json({ message: 'Loan not found' });
     }
 
-    if (loan.status !== 'Retrieved') {
+    if (loan.status !== 'Approved') {
       return res.status(400).json({ message: `Cannot return a loan with status "${loan.status}"` });
     }
-
-    const book = await Book.findById(loan.bookId);
-    if (!book) {
-      return res.status(404).json({ message: 'Book not found' });
-    }
-
-    book.borrowedBy = null;
-    await book.save();
 
     loan.status = 'Returned';
     await loan.save();
@@ -164,11 +138,26 @@ const returnLoan = async (req, res) => {
   }
 };
 
+// DELETE /loans/:id (For rejecting a request)
+const deleteLoan = async (req, res) => {
+  try {
+    const loan = await Loan.findById(req.params.id);
+    if (!loan) {
+      return res.status(404).json({ message: 'Loan not found' });
+    }
+    
+    await Loan.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: 'Loan deleted/rejected successfully' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   createLoan,
   getAllLoans,
   getLoanById,
   approveLoan,
-  retrieveLoan,
-  returnLoan
+  returnLoan,
+  deleteLoan
 };

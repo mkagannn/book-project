@@ -1,0 +1,525 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f5f8f8;
+}
+
+/* =========================
+   GLOBAL PAGE TITLES
+========================= */
+
+.page-title, .page-header-left h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    color: #0f172a;
+    margin: 0 0 6px 0;
+    padding-left: 12px;
+    border-left: 5px solid #14b8a6; /* Eye-catching turquoise accent */
+    line-height: 1.1;
+}
+
+
+
+
+
+/* =========================
+
+   SIDEBAR
+
+========================= */
+
+
+
+.sidebar {
+
+    width: 285px;
+
+    height: 100%;
+
+
+
+    padding: 28px 20px 24px;
+
+
+
+    display: flex;
+
+    flex-direction: column;
+
+
+
+    background: linear-gradient(180deg,
+
+            #101c32 0%,
+
+            #0d172b 100%);
+
+
+
+    color: #ffffff;
+
+}
+
+
+
+
+
+/* =========================
+
+   BRAND
+
+========================= */
+
+
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+
+
+    margin: 0 8px 28px;
+
+}
+
+
+
+.brand-icon {
+
+    width: 36px;
+
+    height: 36px;
+
+
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+
+
+    border-radius: 10px;
+
+
+
+    background: #13b8a6;
+
+    color: #ffffff;
+
+}
+
+
+
+.brand-icon svg {
+
+    width: 19px;
+
+    height: 19px;
+
+}
+
+
+
+.brand-name {
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.2px;
+
+}
+
+
+
+
+
+/* =========================
+
+   PROFILE CARD
+
+========================= */
+
+
+
+.profile-card {
+
+    height: 70px;
+
+
+
+    margin-top: auto;
+    margin-bottom: 8px;
+
+    padding: 12px;
+
+
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+
+
+    border-radius: 10px;
+
+
+
+    background: rgba(50, 67, 93, 0.55);
+
+}
+
+
+
+.avatar {
+
+    width: 36px;
+
+    height: 36px;
+
+
+
+    flex-shrink: 0;
+
+
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+
+
+    border-radius: 50%;
+
+
+
+    background: #19b9aa;
+
+    color: #ffffff;
+
+
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+
+
+.profile-info {
+
+    min-width: 0;
+
+}
+
+
+
+.profile-name {
+
+    margin-bottom: 3px;
+
+
+
+    color: #ffffff;
+
+
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+}
+
+
+
+.profile-email {
+
+    color: #b5becd;
+
+
+
+    font-size: 10px;
+
+
+
+    white-space: nowrap;
+
+}
+
+
+
+
+
+/* =========================
+
+   SECTION TITLE
+
+========================= */
+
+
+
+.section-title {
+
+    margin: 0 8px 9px;
+
+
+
+    color: #7f8ba0;
+
+
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+
+
+    letter-spacing: 0.6px;
+
+
+
+    text-transform: uppercase;
+
+}
+
+
+
+
+
+/* =========================
+
+   NAVIGATION
+
+========================= */
+
+
+
+.nav {
+
+    display: flex;
+
+    flex-direction: column;
+
+
+
+    gap: 4px;
+
+}
+
+
+
+.nav-item {
+
+    height: 46px;
+
+
+
+    padding: 0 13px;
+
+
+
+    display: flex;
+
+    align-items: center;
+
+
+
+    gap: 12px;
+
+
+
+    border-radius: 7px;
+
+
+
+    color: #aeb8c8;
+
+
+
+    text-decoration: none;
+
+
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+
+
+    transition:
+
+        background 0.15s ease,
+
+        color 0.15s ease;
+
+}
+
+
+
+.nav-item svg {
+
+    width: 19px;
+
+    height: 19px;
+
+
+
+    flex-shrink: 0;
+
+
+
+    stroke-width: 1.7;
+
+}
+
+
+
+.nav-item:hover {
+
+    background: rgba(255, 255, 255, 0.06);
+
+
+
+    color: #ffffff;
+
+}
+
+
+
+
+
+/* =========================
+
+   ACTIVE ITEM
+
+========================= */
+
+
+
+.nav-item.active {
+
+    background: #14b8a6;
+
+
+
+    color: #ffffff;
+
+
+
+    box-shadow:
+
+        0 4px 12px rgba(20, 184, 166, 0.15);
+
+}
+
+
+
+
+
+/* =========================
+
+   MY ACCOUNT
+
+========================= */
+
+
+
+.account {
+
+    margin-top: 28px;
+
+}
+
+
+
+
+
+/* =========================
+
+   LOGOUT
+
+========================= */
+
+
+
+.logout {
+
+    color: #f27d83;
+
+}
+
+
+
+.logout:hover {
+
+    background: rgba(242, 125, 131, 0.08);
+
+
+
+    color: #ff9297;
+
+}
+
+.app-layout {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Sağ taraftaki Ana İçerik */
+.main-content {
+    flex-grow: 1;
+    /* Kalan tüm sağ alanı kaplar */
+    padding: 40px;
+}
+
+/* Sol taraftaki Sidebar */
+#sidebar-container {
+    width: 285px; /* Match .sidebar width */
+    flex-shrink: 0; /* Genişliğin küçülmesini engeller */
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+/* =========================
+   BADGE (pending count)
+========================= */
+
+.badge {
+    margin-left: auto;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #14b8a6;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.badge:empty {
+    display: none;
+}

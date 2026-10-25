@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Books — CityLibrary</title>
+  <link rel="stylesheet" href="../components/sidebar.css">
+  <link rel="stylesheet" href="../components/books.css">
+</head>
+
+<body>
+
+  <div class="app-layout">
+
+    <!-- Member Sidebar -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- Page Header -->
+      <div class="page-header" style="margin-bottom: 20px;">
+        <div class="page-header-left">
+          <h1 style="font-size:28px; font-weight:700; color:#0f172a; margin:0;">Browse Books</h1>
+        </div>
+      </div>
+
+      <!-- Arama + Kategori Filtresi -->
+      <div class="search-bar">
+        <div class="search-input-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="10.8" cy="10.8" r="5.8"/>
+            <path d="m15.2 15.2 4.3 4.3"/>
+          </svg>
+          <input type="text" id="search-input" placeholder="Search by name...">
+        </div>
+        <select class="category-select" id="category-select">
+          <option value="">Categories</option>
+        </select>
+      </div>
+
+      <!-- Kitap Grid — JS ile doldurulacak -->
+      <div class="books-grid" id="books-grid">
+        <!-- Yükleniyor durumu -->
+        <div class="books-empty">Loading books...</div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/browse-books.js"></script>
+
+</body>
+
+</html>
+

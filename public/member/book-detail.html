@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Detail — CityLibrary</title>
+  <link rel="stylesheet" href="../components/sidebar.css">
+  <link rel="stylesheet" href="../components/books.css">
+  <link rel="stylesheet" href="../components/book-detail.css">
+</head>
+
+<body>
+
+  <div class="app-layout">
+
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+
+      <!-- Geri linki -->
+      <a href="browse-books.html" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M19 12H5M5 12l7 7M5 12l7-7"/>
+        </svg>
+        Back to Catalog
+      </a>
+
+      <!-- İki sütun layout -->
+      <div class="detail-layout">
+
+        <!-- SOL: Kitap Kapağı -->
+        <div class="detail-cover-wrap">
+          <div class="detail-cover cover-red" id="book-cover">
+            <div>
+              <div class="detail-cover-title" id="cover-title">—</div>
+              <div class="detail-cover-author" id="cover-author">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SAĞ: Bilgiler + Takvim -->
+        <div class="detail-info">
+
+          <h1 class="detail-title" id="book-title">Loading...</h1>
+          <p class="detail-subtitle" id="book-subtitle"></p>
+
+          <!-- Status + Author meta -->
+          <div class="detail-meta">
+            <div class="detail-meta-row">
+              <span class="detail-meta-label">Status</span>
+              <span class="detail-meta-value" id="book-status">—</span>
+            </div>
+            <div class="detail-meta-row">
+              <span class="detail-meta-label">Author</span>
+              <span class="detail-meta-value" id="book-author">—</span>
+            </div>
+          </div>
+
+          <!-- Calendar + selection info wrapper -->
+          <div style="max-width: 450px;">
+
+            <!-- Availability Calendar -->
+            <div class="calendar-card" id="calendar-card" onclick="toggleCalendarDays()">
+              <div class="calendar-header">
+                <span class="calendar-title">Availability Calendar</span>
+                <div class="calendar-nav">
+                  <button onclick="prevMonth(); event.stopPropagation()">&#8249;</button>
+                  <span id="calendar-month-label"></span>
+                  <button onclick="nextMonth(); event.stopPropagation()">&#8250;</button>
+                  <svg id="cal-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;margin-left:4px;transition:transform 0.2s;">
+                    <path d="M6 9l6 6 6-6"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Weekdays -->
+              <div class="calendar-weekdays" id="cal-weekdays" style="display:none;">
+                <span>Mon</span><span>Tue</span><span>Wed</span>
+                <span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+              </div>
+
+              <!-- Days filled by JS -->
+              <div class="calendar-days" id="calendar-days" style="display:none;" onclick="event.stopPropagation()"></div>
+            </div>
+
+            <!-- Selection info -->
+            <p class="selection-info" id="selection-info">Select a start date</p>
+
+          </div>
+
+          <!-- Loan Oluştur -->
+          <button class="btn-create-loan" id="create-loan-btn" onclick="createLoan()" disabled>
+            Create Loan
+          </button>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/book-detail.js"></script>
+
+</body>
+
+</html>
+

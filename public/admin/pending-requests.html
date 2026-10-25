@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pending Requests — CityLibrary Admin</title>
+  <!-- Ortak CSS Dosyaları -->
+  <link rel="stylesheet" href="../components/sidebar.css">
+  <link rel="stylesheet" href="../components/loans.css">
+  
+  <style>
+    /* Pending Requests Özel Stiller */
+    .action-btn {
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    
+    .btn-approve {
+      background: #10b981; /* Emerald-500 */
+      color: white;
+    }
+    .btn-approve:hover {
+      background: #059669; /* Emerald-600 */
+    }
+    
+    .btn-reject {
+      background: #fee2e2; /* Red-100 */
+      color: #ef4444;      /* Red-500 */
+    }
+    .btn-reject:hover {
+      background: #fecaca; /* Red-200 */
+    }
+
+    .member-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .member-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ccfbf1; /* Teal-100 */
+      color: #0f766e;      /* Teal-700 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    .actions-cell {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #64748b;
+    }
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      color: #cbd5e1;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body class="app-layout">
+
+  <!-- Sidebar Container (Admin) -->
+  <div id="sidebar-container" data-sidebar="sidebar.html"></div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    
+    <div class="page-header">
+      <h1 class="page-title">Pending Requests</h1>
+    </div>
+
+    <!-- Tablo -->
+    <div class="table-container">
+      <table class="loans-table">
+        <thead>
+          <tr>
+            <th>Member</th>
+            <th>Book</th>
+            <th>Requested Dates</th>
+            <th>Requested On</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="requests-tbody">
+          <!-- JS ile doldurulacak -->
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/sidebar.js"></script>
+  
+  <script src="../js/pending-requests.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Active Loans — CityLibrary Admin</title>
+  
+  <link rel="stylesheet" href="../components/sidebar.css">
+  <link rel="stylesheet" href="../components/loans.css">
+  
+  <style>
+    .btn-return {
+      background: #3b82f6; /* Blue-500 */
+      color: white;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s;
+    }
+    .btn-return:hover {
+      background: #2563eb; /* Blue-600 */
+    }
+
+    .member-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .member-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ccfbf1;
+      color: #0f766e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .status-active {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+    .status-overdue {
+      background: #fee2e2;
+      color: #ef4444;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #64748b;
+    }
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      color: #cbd5e1;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body class="app-layout">
+
+  <!-- Sidebar -->
+  <div id="sidebar-container" data-sidebar="sidebar.html"></div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    
+    <div class="page-header">
+      <h1 class="page-title">Active Loans</h1>
+    </div>
+
+    <!-- Tablo -->
+    <div class="table-container">
+      <table class="loans-table">
+        <thead>
+          <tr>
+            <th>Member</th>
+            <th>Book</th>
+            <th>Borrowed Date</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="loans-tbody">
+          <!-- JS ile doldurulacak -->
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <script src="../js/active-loans_a.js"></script>
+</body>
+</html>

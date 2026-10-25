@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CityLibrary — Login</title>
+  <link rel="stylesheet" href="components/auth.css">
+</head>
+
+<body>
+
+  <!-- SOL PANEL: Karanlık şehir görseli + logo + slogan -->
+  <div class="auth-left">
+
+    <!-- Logo: sol üst -->
+    <div class="auth-brand">
+      <div class="auth-brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <span class="auth-brand-name">CityLibrary</span>
+    </div>
+
+    <!-- Slogan: sol alt -->
+    <div class="auth-slogan">
+      <h2>A City of Stories.<br>A Place for Everyone.</h2>
+      <p>Discover, learn, and connect at your city library.<br>Your next chapter starts here.</p>
+    </div>
+
+  </div>
+
+  <!-- SAĞ PANEL: Form -->
+  <div class="auth-right">
+    <div class="auth-box">
+
+      <!-- Başlık: Login/Register tab'a göre JS ile değişecek -->
+      <h1 id="auth-title">Welcome</h1>
+
+      <!-- TAB GEÇİŞİ: İki buton, tıklanınca ilgili form görünür -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Login</button>
+        <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Register</button>
+      </div>
+
+      <!-- LOGIN FORMU -->
+      <form id="login-form" onsubmit="handleLogin(event)">
+
+        <div class="form-group">
+          <label for="login-email">E-mail</label>
+          <input type="email" id="login-email" placeholder="" required>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="" required>
+          <div id="login-error" style="display: none; color: #dc2626; font-size: 12px; margin-top: 6px; font-weight: 500;">Invalid email or password.</div>
+        </div>
+
+        <!-- Remember Me + Şifremi Unuttum -->
+        <div class="form-check">
+          <label class="form-check-left">
+            <input type="checkbox" id="remember-me" checked>
+            Remember Me
+          </label>
+          <a href="#" onclick="showForgotPassword(event)">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
+
+      <!-- FORGOT PASSWORD FORMU (gizli) -->
+      <form id="forgot-password-form" onsubmit="handleForgotPassword(event)" style="display: none;">
+        <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">
+          Enter your email address and we'll send you a link to reset your password.
+        </p>
+        <div class="form-group">
+          <label for="forgot-email">E-mail</label>
+          <input type="email" id="forgot-email" placeholder="Enter your email" required>
+        </div>
+        <button type="submit" class="btn-primary" id="forgot-btn">Send Reset Link</button>
+        <div style="text-align: center; margin-top: 16px;">
+          <a href="#" onclick="switchTab('login'); return false;" style="font-size: 14px; color: #14b8a6; text-decoration: none; font-weight: 500;">&larr; Back to Login</a>
+        </div>
+      </form>
+
+      <!-- REGISTER FORMU (varsayılan gizli, tab ile açılır) -->
+      <form id="register-form" onsubmit="handleRegister(event)">
+
+        <div class="form-group">
+          <label for="reg-name">Name-Surname</label>
+          <input type="text" id="reg-name" placeholder="" required>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-email">E-mail</label>
+          <input type="email" id="reg-email" placeholder="" required>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-password">Password</label>
+          <input type="password" id="reg-password" placeholder="" required>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-password2">Re-enter Password</label>
+          <input type="password" id="reg-password2" placeholder="" required>
+        </div>
+
+        <!-- Üyelik kurallarını onaylıyorum -->
+        <div class="form-check">
+          <label class="form-check-left">
+            <input type="checkbox" id="confirm-rules" required>
+            I confirm member rules.
+          </label>
+        </div>
+
+        <button type="submit" class="btn-primary">Register</button>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- api.js önce yüklenmeli — auth.js içinde api fonksiyonlarını kullanıyoruz -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+
+</body>
+
+</html>

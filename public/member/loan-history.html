@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan History — CityLibrary</title>
+  <link rel="stylesheet" href="../components/sidebar.css">
+  <link rel="stylesheet" href="../components/loans.css">
+  <style>
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      background: #f1f5f9;
+      color: #475569;
+    }
+    .status-active {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+    .status-overdue {
+      background: #fee2e2;
+      color: #ef4444;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #64748b;
+    }
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      color: #cbd5e1;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app-layout">
+
+    <!-- Sidebar -->
+    <div id="sidebar-container" data-sidebar="sidebar.html"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-header-left">
+          <h1 class="page-title">Loan History</h1>
+          <p style="color:#64748b; margin-top:4px; font-size:14px;">Review your returned books and past reading history.</p>
+        </div>
+        <div class="page-header-right" id="total-records-container" style="display: none;">
+          <span class="dot"></span>
+          <span id="total-records">0 Total Records</span>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-container">
+        <table class="loans-table">
+          <thead>
+            <tr>
+              <th>Book Details</th>
+              <th>Borrowed Date</th>
+              <th>Return Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody">
+            <!-- JS ile doldurulacak -->
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <script src="../js/loan-history.js"></script>
+
+</body>
+</html>

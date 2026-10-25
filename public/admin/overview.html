@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — CityLibrary Admin</title>
+  
+  <link rel="stylesheet" href="../components/sidebar.css">
+  <link rel="stylesheet" href="../components/overview.css">
+</head>
+<body class="app-layout">
+
+  <!-- Sidebar -->
+  <div id="sidebar-container" data-sidebar="sidebar.html"></div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    
+    <div class="page-header">
+      <h1 class="page-title">Dashboard Overview</h1>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="stats-grid">
+      <!-- Card 1: Books -->
+      <div class="stat-card blue" onclick="window.location.href='all-books.html'">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-books">-</div>
+          <div class="stat-label">Total Books</div>
+        </div>
+      </div>
+
+      <!-- Card 2: Members -->
+      <div class="stat-card purple" onclick="window.location.href='members.html'">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-members">-</div>
+          <div class="stat-label">Total Members</div>
+        </div>
+      </div>
+
+      <!-- Card 3: Active Loans -->
+      <div class="stat-card green" onclick="window.location.href='active-loans_a.html'">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-active-loans">-</div>
+          <div class="stat-label">Active Loans</div>
+        </div>
+      </div>
+
+      <!-- Card 4: Pending Requests -->
+      <div class="stat-card orange" onclick="window.location.href='pending-requests.html'">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-pending">-</div>
+          <div class="stat-label">Pending Requests</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Sections -->
+    <div class="dashboard-sections">
+      
+      <!-- Latest Activity / Approvals -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="dash-section-title">Latest Approved Loans</h2>
+          <a href="active-loans_a.html" class="view-all-link">View All</a>
+        </div>
+        <ul class="activity-list" id="activity-list">
+          <li class="activity-item" style="color: #64748b; font-size: 14px;">Loading data...</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', loadDashboardData);
+
+    async function loadDashboardData() {
+      try {
+        // Fetch all data in parallel
+        const [books, members, loans] = await Promise.all([
+          api.getBooks(),
+          api.getUsers(),
+          api.getLoans()
+        ]);
+
+        // Calculate stats
+        const totalBooks = books.length;
+        const totalMembers = members.filter(m => m.role === 'member').length; // only count standard members if desired, or all
+        
+        const activeLoans = loans.filter(l => l.status === 'Approved');
+        const pendingLoans = loans.filter(l => l.status === 'Requested');
+
+        // Update UI
+        document.getElementById('stat-books').textContent = totalBooks;
+        document.getElementById('stat-members').textContent = totalMembers;
+        document.getElementById('stat-active-loans').textContent = activeLoans.length;
+        document.getElementById('stat-pending').textContent = pendingLoans.length;
+
+        // Render Recent Approvals
+        renderRecentActivity(activeLoans);
+
+      } catch (err) {
+        console.error("Dashboard error:", err);
+      }
+    }
+
+    function renderRecentActivity(activeLoans) {
+      const list = document.getElementById('activity-list');
+      
+      if (activeLoans.length === 0) {
+        list.innerHTML = `<li class="activity-item" style="color: #64748b; font-size: 14px;">No active loans found.</li>`;
+        return;
+      }
+
+      list.innerHTML = '';
+      
+      // Sort by updated/created mostly recently, take top 4
+      const recent = activeLoans.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).slice(0, 4);
+
+      recent.forEach(loan => {
+        const memberName = loan.userId?.name || 'Unknown User';
+        const bookTitle = loan.bookId?.title || 'Unknown Book';
+        const initials = getInitials(memberName);
+
+        const li = document.createElement('li');
+        li.className = 'activity-item';
+        li.innerHTML = `
+          <div class="activity-avatar">${initials}</div>
+          <div class="activity-content">
+            <div class="activity-text">
+              <strong>${memberName}</strong> borrowed <strong>${bookTitle}</strong>
+            </div>
+            <div class="activity-time">Return by ${formatDate(loan.endDate)}</div>
+          </div>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    function getInitials(name) {
+      const parts = name.trim().split(' ');
+      if (parts.length === 0) return '?';
+      if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+
+    function formatDate(dateString) {
+      if (!dateString) return '';
+      return new Date(dateString).toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+    }
+  </script>
+
+</body>
+</html>
+

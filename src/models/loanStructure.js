@@ -14,7 +14,7 @@ const loanSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['Requested', 'Approved', 'Retrieved', 'Returned'],
+      enum: ['Requested', 'Approved', 'Returned'],
       default: 'Requested'
     },
     requestedStartDate: {
@@ -31,4 +31,4 @@ const loanSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Loan', loanSchema);
+module.exports = mongoose.models.Loan || mongoose.model('Loan', loanSchema);

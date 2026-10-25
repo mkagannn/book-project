@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile — CityLibrary</title>
+  <link rel="stylesheet" href="../components/sidebar.css">
+  
+  <style>
+    /* Profile Specific Styles */
+    .profile-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 24px;
+      max-width: 1000px;
+    }
+
+    /* Left Card: User Info */
+    .profile-card-main {
+      flex: 1;
+      min-width: 300px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 40px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    }
+
+    .profile-avatar-large {
+      width: 100px;
+      height: 100px;
+      background: #14b8a6;
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(20, 184, 166, 0.2);
+    }
+
+    .profile-name-large {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+
+    .profile-email-large {
+      font-size: 15px;
+      color: #64748b;
+      margin-bottom: 24px;
+    }
+
+    .profile-role-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #475569;
+      font-weight: 600;
+      border-radius: 20px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Right Section: Reading Stats */
+    .stats-wrapper {
+      flex: 2;
+      min-width: 300px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      align-content: start;
+    }
+
+    .stat-box {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+
+    .stat-box.active-box::before { background: #10b981; }
+    .stat-box.returned-box::before { background: #3b82f6; }
+    .stat-box.pending-box::before { background: #f59e0b; }
+
+    .stat-box-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-box-value {
+      font-size: 36px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <div id="sidebar-container" data-sidebar="sidebar.html"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h1 class="page-title">My Profile</h1>
+          <p style="color:#64748b; margin-top:4px; font-size:14px;">Manage your account details and view your reading activity.</p>
+        </div>
+      </div>
+
+      <div class="profile-container">
+        
+        <!-- Left Column: User Info -->
+        <div class="profile-card-main">
+          <div class="profile-avatar-large" id="p-avatar">?</div>
+          <div class="profile-name-large" id="p-name">Loading...</div>
+          <div class="profile-email-large" id="p-email">--</div>
+          <div class="profile-role-badge" id="p-role">Member</div>
+        </div>
+
+        <!-- Right Column: Stats -->
+        <div class="stats-wrapper">
+          
+          <div class="stat-box active-box">
+            <div class="stat-box-title">Currently Borrowed</div>
+            <div class="stat-box-value" id="stat-active">-</div>
+          </div>
+
+          <div class="stat-box pending-box">
+            <div class="stat-box-title">Pending Requests</div>
+            <div class="stat-box-value" id="stat-pending">-</div>
+          </div>
+
+          <div class="stat-box returned-box">
+            <div class="stat-box-title">Books Read (Returned)</div>
+            <div class="stat-box-value" id="stat-returned">-</div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <script src="../js/profile.js"></script>
+
+</body>
+</html>
+

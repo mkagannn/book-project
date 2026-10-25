@@ -1,0 +1,189 @@
+/* =========================
+   LOANS.CSS
+   Shared styles for:
+   - member/active-loans.html
+   - member/loan-history.html
+   - admin/active-loans_a.html
+   - admin/loan-history_a.html
+========================= */
+
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+
+.page-header-left p {
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.page-header-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    font-size: 12px;
+    font-weight: 600;
+    color: #475569;
+    white-space: nowrap;
+}
+
+.page-header-right .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #14b8a6;
+    flex-shrink: 0;
+}
+
+.page-header-right .dot.red {
+    background: #ef4444;
+}
+
+
+/* =========================
+   TABLE CONTAINER
+========================= */
+
+.table-container {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1.5px dashed #c8dada;
+    overflow: hidden;
+}
+
+.loans-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.loans-table thead tr {
+    border-bottom: 1px solid #e8f0f0;
+}
+
+.loans-table thead th {
+    padding: 14px 20px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #94a3b8;
+}
+
+.loans-table tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.15s ease;
+}
+
+.loans-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.loans-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.loans-table tbody td {
+    padding: 16px 20px;
+    font-size: 13px;
+    color: #334155;
+    vertical-align: middle;
+}
+
+
+/* =========================
+   BOOK CELL
+========================= */
+
+.book-cell {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.book-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #e6faf8;
+    color: #14b8a6;
+}
+
+.book-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.8;
+}
+
+.book-title {
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 2px;
+}
+
+.book-author {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+/* Date columns */
+.date-bold {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+
+/* =========================
+   STATUS BADGES
+========================= */
+
+.badge-status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* Overdue — red */
+.badge-overdue {
+    color: #ef4444;
+}
+
+/* Due soon / Tomorrow — orange */
+.badge-due-soon {
+    color: #f97316;
+}
+
+/* Active / Days left — green */
+.badge-active {
+    color: #22c55e;
+}
+
+/* Returned — teal/green */
+.badge-returned {
+    color: #14b8a6;
+}
+
+/* Muted (e.g. pending) */
+.badge-muted {
+    color: #94a3b8;
+}
+
